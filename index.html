@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Jeopardy Assignment</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1>This Is <span>Jeopardy</span></h1>
+    <h2>Please select a {{text}}.</h2>
+    <div id="quiz"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+
+    <script id="categories" type="text/x-handlebars-template">
+
+        <article class="threeCats">
+
+            <strong>{{text}}</strong>
+
+            <p>{{points}}</p>
+
+            <span class="catComfirmation">{{answer}}</span
+
+        </article>
+        
+        <div><span id="#scorePlacehold"></span</div>
+    </script>
+    <script id="selectedQuestion" type="text/x-handlebars-template">
+        <article class="userQuestion">
+
+            <strong>{{text}}</strong>
+
+
+            <div>
+                <input type="text" placeholder='Enter Answer Here' </input>
+                <button class="submitButton">Guess</button>
+                <span class="userConfirmation"></span>
+            </div>
+
+        </article>
+
+    </script>
+
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
