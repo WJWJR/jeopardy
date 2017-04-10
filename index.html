@@ -22,20 +22,33 @@
 
             <p>{{points}}</p>
 
-            <span class="catComfirmation">{{answer}}</span
-
         </article>
-        
+
+        <span class="catComfirmation">{{answer}}</span>
+
         <div><span id="#scorePlacehold"></span</div>
     </script>
+
+    <script id="threeQuestions" type="text/x-handlebars-template">
+        <article class="userQuestions">
+
+            <strong>{{text}}</strong>
+
+            <span class="catComfirmation">{{answer}}</span>
+
+        </article>
+
+    </script>
+
+
     <script id="selectedQuestion" type="text/x-handlebars-template">
         <article class="userQuestion">
 
             <strong>{{text}}</strong>
 
 
-            <div>
-                <input type="text" placeholder='Enter Answer Here' </input>
+            <div class="userResponse">
+                <input type="text" placeholder='Enter Answer Here'></input>
                 <button class="submitButton">Guess</button>
                 <span class="userConfirmation"></span>
             </div>

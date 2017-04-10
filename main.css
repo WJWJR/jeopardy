@@ -9,16 +9,19 @@ body {
   padding: 20px;
 }
 
+#quiz {
+  display:flex;
+}
+
 article {
   width: 33%;
-  /*height: 0px;*/
   border: 2px solid #091540;
   padding:15px;
   background-color: #fff;
   color: #999;
-  display:inline-block;
   font-size: 1.5rem;
   text-align: center;
+  justify-content: center;
 }
 
 #scorePlaceholder {
