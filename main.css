@@ -2,14 +2,14 @@
   box-sizing: border-box;
 }
 body {
-  width; 80%;
+  width: 60%;
   margin: 0px auto;
   background-color: #060ce9;
   color: #fff;
   padding: 20px;
 }
 
-#quiz {
+#showCategories {
   display:flex;
 }
 
@@ -24,9 +24,26 @@ article {
   justify-content: center;
 }
 
-#scorePlaceholder {
-  width: 20%;
+article.boxOne.question {
+  width: 99%;
+}
+
+#scoreBoard {
+  width: 250px;
   height: 35px;
-  background-color: #f1f1f1;
+  background-color: #3D5A6C;
   border: 3px solid #999;
+  color: #B4E33D;
+
+}
+p.score {
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 20px;
+}
+
+.checkYourAnswer {
+  background-color: #3D5A6C;
+  height: 100px;
 }

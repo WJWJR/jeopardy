@@ -1,132 +1,83 @@
-// function Category(text, points, answer){
-//   this.text = text;
-//   this.points = points;
-//   this.answer = answer;
-//   //console.log('this');
-//
-//
-//   this.isCorrect = function(event){
-//     let span = event.target;
-//     let userConfirmation = span.parentElement;
-//     let threeQuestions = document.querySelector('article.userQuestions');
-//       if (span.textContent === this.answer) {
-//           userConfirmation.textContent = "You Have Selected" + ('span');
-//       }
-//   console.log(userConfirmation);
-//   }
-//
-// // window.addEventListener('this.isCorrect', function(e) {
-// // console.log(window)
-// // });
-//   this.display = function() {
-//     let source = document.querySelector('#categories').innerHTML;
-//     let template = Handlebars.compile(source);
-//     let html = template(this);
-//     document.querySelector('#quiz').insertAdjacentHTML('beforeend', html);
-//     document.querySelector('#quiz article.threeCats').addEventListener('click', this.isCorrect);
-//     //console.log(document.querySelector('#quiz article.threeCats'));
-//
-//   }
-//   /*===========================================================================================================================
-//   THREE QUESTIONS
-//   ============================================================================================================================*/
-//     // function threeQuestions(text, answer) {
-//     // Question.call(this, text, answer);
-//     //console.log('this');
-//     //
-//     //
-//     // this.isCorrectforThreeQuestions = function(event){
-//     //   let article = event.target;
-//     //   let userConfirmation = article.parentNode;
-//     //     if (article.textContent === this.answer) {
-//     //         userConfirmation.textContent = "You Have Selected" + ('article');
-//     //     } if (article)
-//     // console.log(userConfirmation);
-//     // }
-//     //
-//     // this.displayIsForThreeQuestions = function() {
-//     //   let source = document.querySelector('#categories').innerHTML;
-//     //   let template = Handlebars.compile(source);
-//     //   let html = template(this);
-//     //   document.querySelector('#quiz').insertAdjacentHTML('beforeend', html);
-//     //   document.querySelector('#quiz article.threeCats').addEventListener('click', this.isCorrect);
-//     //   //console.log(document.querySelector('#quiz article.threeCats'));
-//     //
-//     // }
-//
-//
-//
-//
-//
-//
-// } //this is attached to the Category Function
-//
-// /*==============================================================================================================================
-// THE FETCH CODE BELOW
-// ==============================================================================================================================*/
-//
-// fetch("http://jservice.io/api/random?count=3")
-//   .then(reponse => reponse.json())
-//   //.then(json =>console.log(json))
-//   .then(catApiArr => catApiArr.forEach(apiForCatDataOnPage))
-//
-//
-// function apiForCatDataOnPage(object) {
-//   let text = object.category.title;
-//   let points = object.value;
-//   let answer = object.userConfirmation;
-//   let holdOnToCategory = new Category(text,points,answer);
-//   // let text = object.question;
-//   // let answer = object.userConfirmation;
-//   // let holdOnToQuestions = new threeQuestions(text,points,answer);
-//
-//   //console.log(text);
-//   holdOnToCategory.display();
-//   // holdOnToQuestions.display();
-// }
-
-
-function GameShow(catorgies, questions, points) {
-  this.catorgies = catorgies;
-  this.questions = questions;
-  this.points = points;
-  this.isTheCorrectAnswer = false;
+fetch('http://jservice.io/api/random?count=3')
+    .then(response => response.json())
+    // .then(object => console.log(object))
+    .then (array => array.map(build)) //change object word to array
+    .then (genericDisplay);//invoke function
+// console.log(Handlebars);
+function build (object){
+  console.log(object);
+  return new Question(object.question, object.answer, object.value, object.category.title);
 }
 
-GameShow.prototype.notCorrectAnswer = function(){
-  this.isTheCorrectAnswer = false;
-};
+let showCategories = document.querySelector('#showCategories');
+let showQuestions = document.querySelector('#showQuestions');
 
-GameShow.prototype.correctAnswer = function(){
-  this.isTheCorrectAnswer = true;
-};
 
-GameShow.prototype.isDisplayed = function(){}
+function Question(text, answer, points, category) {
+    this.text = text;
+    this.answer = answer;
+    this.points = points;
+    this.category = category;
 
-function Player() {
-  this.points = 0;
-  this.nowPointsIndex = 0;
-};
 
-Player.prototype.select = function() {
-  let selectedCategory = this.catorgies;
-  let seclectedQuestion = this.questions;
-};
+    this.categoryDisplay = function () {
+      let source = document.querySelector('#threeCats').innerHTML;
+      let template = Handlebars.compile(source);//method being invoked returns value of template
+      let html = template(this);
+      document.querySelector('#showCategories').insertAdjacentHTML('beforeend', html);
+      document.querySelector('#showCategories article.boxOne:last-of-type div').addEventListener('click', this.questionShowsHere.bind(this));
+    }
+    this.questionShowsHere = function(){
+      let source = document.querySelector('#theQuestionSaidAlex').innerHTML;
+      let template = Handlebars.compile(source);
+      let html = template(this);
+      document.querySelector('#showQuestions').insertAdjacentHTML('beforeend', html);
+      document.querySelector('button.questionAnswer').addEventListener('click', this.isCorrect.bind(this));
+    }
 
-Player.prototype.userInput = function(){
-  let answeredQuestion = 
+    this.isCorrect = function(event) {
+        let submitButton = event.target;
+        let answerSpace = submitButton.previousElementSibling;
+        let answerTyped = answerSpace.value;
+        let rightOrWrongAnswer = document.querySelector('span.answer');
+        if (answerTyped === this.answer) {
+            rightOrWrongAnswer.textContent = "Yes! You Choose again.";
+            score.push(this.points);
+        } else {
+            rightOrWrongAnswer.textContent = "Ha, ha, ha. No.";
+            score.push(this.points*(-1));
+        }
+        document.querySelector('button.nextQuestion').addEventListener('click', this.nextQuestion.bind(this));
+    }
+    this.nextQuestion = function (){
+      showCategories.innerHTML = ""; //resets questions to erase previous fetch
+      showQuestions.innerHTML = "";
+      fetch('http://jservice.io/api/random?count=3')
+          .then(response => response.json())
+          // .then(object => console.log(object))
+          .then (object => object.map(build))
+          .then (genericDisplay)
+          .then (displayScore);
+    }
+
 }
 
-Player.prototype.add = function(points){
-  this.points.push(points);
-};
+function tallyScore (previousScore, currentScore){
+  return previousScore + currentScore;
+}
 
-Player.prototype.winning = function(){
-  let currentPoints = this.points[this.nowPointsIndex];
-  currentPoints(winning);
-};
+function displayScore (){
+  document.querySelector('#scoreBoard').innerHTML = score.reduce(tallyScore);
+}
 
-Player.prototype.notwinning = function(){
-  let currentPoints = this.points[this.nowPointsIndex];
-  currentPoints(winning);
-};
+Question.prototype.display = function (){
+  this.genericDisplay()
+  document.querySelector('#threeCats article.multi:last-of-type ul').addEventListener('click', this.isCorrect.bind(this))
+}
+
+
+function genericDisplay (displayEachQuestion) {
+  displayEachQuestion.forEach(individualQuestion => individualQuestion.categoryDisplay());
+}
+
+let score =[];
